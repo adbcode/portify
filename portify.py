@@ -6,6 +6,8 @@ from pathlib import Path
 
 AUDIO_TAG_API_KEY = ''
 MUSIC_LIBRARY_ROOT = r'D:/Music'
+SAMPLE_DIRECTORY = r'samples'
+SAMPLE_LENGTH = '15'
 
 with open('resources/api-key.txt', 'r') as f:
     AUDIO_TAG_API_KEY = f.readline()
@@ -32,8 +34,23 @@ def get_remaining_api_credits():
     return json['identification_free_sec_remainder']
 
 def test_feasibility():
-    required = 10 * get_file_count()
+    required = int(SAMPLE_LENGTH) * get_file_count()
     available = get_remaining_api_credits()
     return required + 100 < available
 
-print(test_feasibility())
+# ffmpeg format:
+# ffmpeg -i <file> -ss 00:00:30 -ar 8000 -ac 1 -vn -t <length> <target>/<target_name>.wav
+def generate_sample(file, target_name, length, target):
+    target_path = target + '/' + target_name + '.wav'
+    call_parameters = ['ffmpeg', '-y', '-i', file, '-ss', '00:00:30', '-ar', '8000', '-ac', '1', '-vn', '-t', length, target_path]
+    print(call_parameters)
+    subprocess.call(call_parameters )#, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+def generate_samples(files, length = SAMPLE_LENGTH, target = SAMPLE_DIRECTORY):
+    for i in range(len(files)):
+        generate_sample(files[i], str(i), length, target)
+    return get_file_count(target)
+
+# print(test_feasibility())
+
+# print(generate_samples(get_file_paths()))
