@@ -33,9 +33,7 @@ with open('resources/api-key.txt', 'r') as f:
     if SPOTIFY_CLIENT_SECRET == '':
         SPOTIFY_CLIENT_SECRET = f.readline().rstrip()
 
-# SPOTIFY_CLIENT = spotipy.Spotify(auth_manager = SpotifyClientCredentials(   client_id = SPOTIFY_CLIENT_ID,
-#                                                                             client_secret = SPOTIFY_CLIENT_SECRET))
-
+# Requires user input when using for the first time
 SPOTIFY_TOKEN = util.prompt_for_user_token( SPOTIFY_USERNAME,
                                             SPOTIFY_SCOPE,
                                             client_id = SPOTIFY_CLIENT_ID,
