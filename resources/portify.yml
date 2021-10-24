@@ -1,0 +1,7 @@
+name: portify
+channels:
+  - defaults
+dependencies:
+  - python=3
+  - requests
+  - spotipy
