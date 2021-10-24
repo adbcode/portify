@@ -1,0 +1,4 @@
+<audiotag api key>
+<spotify username>
+<spotify client>
+<spotify secret>
